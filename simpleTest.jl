@@ -14,7 +14,6 @@ co2 = MolecularProperty(0.0440, 7.38e6, 304.1, 9.412e-5, 0.224)
 c1 = MolecularProperty(0.0160, 4.60e6, 190.6, 9.863e-5, 0.011)
 c10 = MolecularProperty(0.0142, 2.10e6, 617.7, 6.098e-4, 0.488)
 
-
 z0 = [0.5, 0.3, 0.2]
 zi = [0.99, 0.01-1e-3, 1e-3]
 mixture = MultiComponentMixture([co2, c1, c10], names = ["CO2", "C1", "C10"])
@@ -58,5 +57,6 @@ state0 = setup_state(model, init)
 
 states, = simulate(state0, model, timesteps, forces = forces, parameters = parameters);
 
-
-# see each timestep etc
+## more information
+sim = Simulator(model, state0 = state0)
+simulate!(sim, timesteps, forces = forces, parameters = parameters, max_timestep_cuts = 0, max_nonlinear_iterations = 0);
