@@ -1,10 +1,8 @@
 using JutulDarcy, Jutul, MultiComponentFlash
 g = CartesianMesh((3, 1), (3.0, 1.0)) # to make porevolumes 1
-geo = tpfv_geometry(g)
 poro = [1.0, 0.1, 1.0]
-G = discretized_domain_tpfv_flow(geo, porosity = poro)
-
-nc = number_of_cells(G)
+domain = reservoir_domain(g, porosity = poro)
+nc = number_of_cells(g)
 
 timesteps = [1.0, 2.0] .* 3600*24
 inj = 1
@@ -24,11 +22,10 @@ T0 = 423.25
 
 n = length(z0)
 eos = GenericCubicEOS(mixture)
-nc = number_of_cells(G)
 L, V = LiquidPhase(), VaporPhase()
 # Define system and realize on grid
 sys = MultiPhaseCompositionalSystemLV(eos, (L, V))
-model = SimulationModel(G, sys)
+model = SimulationModel(domain, sys)
 
 push!(model.output_variables, :Saturations)
 push!(model.output_variables, :PhaseMassDensities)
