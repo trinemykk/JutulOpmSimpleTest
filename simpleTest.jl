@@ -26,6 +26,7 @@ L, V = LiquidPhase(), VaporPhase()
 # Define system and realize on grid
 sys = MultiPhaseCompositionalSystemLV(eos, (L, V))
 ctx = DefaultContext()
+# Comment the next line to go back to MRST-like ordering
 ctx = DefaultContext(matrix_layout = BlockMajorLayout())
 model = SimulationModel(domain, sys, context = ctx)
 
@@ -33,7 +34,7 @@ push!(model.output_variables, :Saturations)
 push!(model.output_variables, :PhaseMassDensities)
 push!(model.output_variables, :PhaseViscosities)
 
-kr = BrooksCoreyRelPerm(sys, [2, 3])
+kr = BrooksCoreyRelPerm(sys, [1, 1])
 s = model.secondary_variables
 s[:RelativePermeabilities] = kr
 parameters = setup_parameters(model, Temperature = T0)
