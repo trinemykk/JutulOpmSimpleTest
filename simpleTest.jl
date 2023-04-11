@@ -61,3 +61,5 @@ states, = simulate(state0, model, timesteps, forces = forces, parameters = param
 ## more information
 sim = Simulator(model, state0 = state0)
 simulate!(sim, timesteps, forces = forces, parameters = parameters, max_timestep_cuts = 0, max_nonlinear_iterations = 0);
+
+# block-structure
