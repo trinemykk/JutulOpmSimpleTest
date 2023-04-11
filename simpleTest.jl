@@ -25,7 +25,9 @@ eos = GenericCubicEOS(mixture)
 L, V = LiquidPhase(), VaporPhase()
 # Define system and realize on grid
 sys = MultiPhaseCompositionalSystemLV(eos, (L, V))
-model = SimulationModel(domain, sys)
+ctx = DefaultContext()
+ctx = DefaultContext(matrix_layout = BlockMajorLayout())
+model = SimulationModel(domain, sys, context = ctx)
 
 push!(model.output_variables, :Saturations)
 push!(model.output_variables, :PhaseMassDensities)
